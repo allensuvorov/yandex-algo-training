@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -13,8 +12,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(content))
-	ans := resTemp(getArgs(content))
+
+	res := []byte(strconv.Itoa(resTemp(getArgs(content))))
+	err = os.WriteFile("output.txt", res, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
 
 func getArgs(data []byte) (int, int, string) {
