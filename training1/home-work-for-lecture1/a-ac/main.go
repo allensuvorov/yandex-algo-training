@@ -14,6 +14,7 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(string(content))
+	ans := resTemp(getArgs(content))
 }
 
 func getArgs(data []byte) (int, int, string) {
@@ -31,9 +32,21 @@ func getArgs(data []byte) (int, int, string) {
 }
 
 func resTemp(tRoom, tCond int, mode string) int {
-	"freeze" // can only decrease temp, if needed
-	"heat"   // can only increase temp, if needed
-	"auto"   // does both
-	"fan"    // doesn't change temp
+	switch mode {
+	case "fan": // doesn't change temp
+		return tRoom
+	case "auto": // does both inc and dec temp
+		return tCond
+	case "freeze": // can only decrease temp, if needed
+		if tCond < tRoom {
+			return tCond
+		}
+		return tRoom
+	case "heat": // can only increase temp, if needed
+		if tCond > tRoom {
+			return tCond
+		}
+		return tRoom
+	}
 	return 0
 }
